@@ -17,7 +17,6 @@ const demoContent = [
 ];
 
 const renderActions = status => {
-  const preventDefault = (event) => event.preventDefault();
   switch (status) {
     case 'Login':
       return (

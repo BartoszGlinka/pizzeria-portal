@@ -8,13 +8,15 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
+import { Link } from 'react-router-dom';
 
 class Waiter extends React.Component {
   static propTypes = {
     fetchTables: PropTypes.func,
+    changeStatus: PropTypes.func,
     loading: PropTypes.shape({
       active: PropTypes.bool,
-      error: PropTypes.oneOf(PropTypes.bool,PropTypes.string),
+      error: PropTypes.oneOfType(PropTypes.bool,PropTypes.string),
     }),
   }
 
@@ -23,34 +25,35 @@ class Waiter extends React.Component {
     fetchTables();
   }
 
-  renderActions(status){
+  renderActions(status, id){
+    const {changeStatus} = this.props;
     switch (status) {
       case 'free':
         return (
           <>
-            <Button>thinking</Button>
-            <Button>new order</Button>
+            <Button onClick={() => {changeStatus({ status: 'thinking', id: id })}}>thinking</Button>
+            <Button component={Link} to={`${process.env.PUBLIC_URL}/waiter/order/new`}>new order</Button>
           </>
         );
       case 'thinking':
         return (
-          <Button>new order</Button>
+          <Button component={Link} to={`${process.env.PUBLIC_URL}/waiter/order/new`}>new order</Button>
         );
       case 'ordered':
         return (
-          <Button>prepared</Button>
+          <Button onClick={() => {changeStatus({ status: 'prepared', id: id })}}>prepared</Button>
         );
       case 'prepared':
         return (
-          <Button>delivered</Button>
+          <Button onClick={() => {changeStatus({ status: 'delivered', id: id })}}>delivered</Button>
         );
       case 'delivered':
         return (
-          <Button>paid</Button>
+          <Button onClick={() => {changeStatus({ status: 'paid', id: id })}}>paid</Button>
         );
       case 'paid':
         return (
-          <Button>free</Button>
+          <Button onClick={() => {changeStatus({ status: 'free', id: id })}}>free</Button>
         );
       default:
         return null;
