@@ -31,29 +31,28 @@ class Waiter extends React.Component {
       case 'free':
         return (
           <>
-            <Button onClick={() => {changeStatus({ status: 'thinking', id: id })}}>thinking</Button>
-            <Button component={Link} to={`${process.env.PUBLIC_URL}/waiter/order/new`}>new order</Button>
+            <Button onClick={() => changeStatus('thinking', 1)}>thinking</Button>
           </>
         );
       case 'thinking':
         return (
-          <Button component={Link} to={`${process.env.PUBLIC_URL}/waiter/order/new`}>new order</Button>
+          <Button onClick={() => changeStatus('ordered', 2)}>ordered</Button>
         );
       case 'ordered':
         return (
-          <Button onClick={() => {changeStatus({ status: 'prepared', id: id })}}>prepared</Button>
+          <Button onClick={() => changeStatus('prepared', 3)}>prepared</Button>
         );
       case 'prepared':
         return (
-          <Button onClick={() => {changeStatus({ status: 'delivered', id: id })}}>delivered</Button>
+          <Button onClick={() => changeStatus('delivered', 4)}>delivered</Button>
         );
       case 'delivered':
         return (
-          <Button onClick={() => {changeStatus({ status: 'paid', id: id })}}>paid</Button>
+          <Button onClick={() => changeStatus('paid', 5)}>paid</Button>
         );
       case 'paid':
         return (
-          <Button onClick={() => {changeStatus({ status: 'free', id: id })}}>free</Button>
+          <Button onClick={() => changeStatus('free', 6)}>free</Button>
         );
       default:
         return null;

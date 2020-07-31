@@ -19,7 +19,7 @@ const CHANGE_STATUS = createActionName('CHANGE_STATUS');
 export const fetchStarted = payload => ({ payload, type: FETCH_START });
 export const fetchSuccess = payload => ({ payload, type: FETCH_SUCCESS });
 export const fetchError = payload => ({ payload, type: FETCH_ERROR });
-export const changeStatus = payload => ({ payload, type: CHANGE_STATUS });
+export const changeStatus = (status,id) => ({status, id, type: CHANGE_STATUS});
 
 /* thunk creators */
 export const fetchFromAPI = () => {
@@ -37,20 +37,18 @@ export const fetchFromAPI = () => {
   };
 };
 
-export const changeStatusAPI = (id, status) => {
-  return (dispatch) => {
-      dispatch(fetchStarted());
-
-      Axios
-        .get(`${api.url}/${api.tables}`)
-        .then(res => {
-          dispatch(changeStatus(id, status));
-        })
-        .catch(err => {
-          dispatch(fetchError(err.message || true));
-        });
-    };
-
+export const changeStatusAPI = (status, id) => {
+  return (dispatch, getState) => {
+    
+    Axios
+      .get(`${api.url}/${api.tables}`)
+      .then(res => {
+        dispatch(changeStatus(status,id));
+      })
+      .catch(err => {
+        dispatch(fetchError(err.message || true));
+      });
+  };
 };
 
 /* reducer */
@@ -87,7 +85,7 @@ export default function reducer(statePart = [], action = {}) {
     case CHANGE_STATUS: {
       return {
         ...statePart,
-        data: statePart.data.map(table => (table.id === action.payload.id) ? { ...table, status: action.payload.status } : table)
+        data: statePart.data.map (table => action.id === table.id ? {...table, status: action.status  } : table ),
       }
     }
     default:
