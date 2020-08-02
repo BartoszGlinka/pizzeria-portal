@@ -38,7 +38,7 @@ export const fetchFromAPI = () => {
 };
 
 export const changeStatusAPI = (status, id) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     
     Axios
       .get(`${api.url}/${api.tables}`)
@@ -85,7 +85,7 @@ export default function reducer(statePart = [], action = {}) {
     case CHANGE_STATUS: {
       return {
         ...statePart,
-        data: statePart.data.map (table => action.id === table.id ? {...table, status: action.status  } : table ),
+        data: statePart.data.map (table => table.id === action.id  ? {...table, status: action.status  } : table ),
       }
     }
     default:

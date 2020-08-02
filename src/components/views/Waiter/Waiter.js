@@ -31,28 +31,29 @@ class Waiter extends React.Component {
       case 'free':
         return (
           <>
-            <Button onClick={() => changeStatus('thinking', 1)}>thinking</Button>
+            <Button onClick={() => changeStatus('thinking', id)}>thinking</Button>
+            {console.log(status)}
           </>
         );
       case 'thinking':
         return (
-          <Button onClick={() => changeStatus('ordered', 2)}>ordered</Button>
+          <Button onClick={() => changeStatus('ordered', id)}>ordered</Button>
         );
       case 'ordered':
         return (
-          <Button onClick={() => changeStatus('prepared', 3)}>prepared</Button>
+          <Button onClick={() => changeStatus('prepared', id)}>prepared</Button>
         );
       case 'prepared':
         return (
-          <Button onClick={() => changeStatus('delivered', 4)}>delivered</Button>
+          <Button onClick={() => changeStatus('delivered', id)}>delivered</Button>
         );
       case 'delivered':
         return (
-          <Button onClick={() => changeStatus('paid', 5)}>paid</Button>
+          <Button onClick={() => changeStatus('paid', id)}>paid</Button>
         );
       case 'paid':
         return (
-          <Button onClick={() => changeStatus('free', 6)}>free</Button>
+          <Button onClick={() => changeStatus('free', id)}>free</Button>
         );
       default:
         return null;
@@ -104,7 +105,7 @@ class Waiter extends React.Component {
                     )}
                   </TableCell>
                   <TableCell>
-                    {this.renderActions(row.status)}
+                    {this.renderActions(row.status, row.id)}
                   </TableCell>
                 </TableRow>
               ))}
