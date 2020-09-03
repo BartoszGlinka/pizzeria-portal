@@ -39,11 +39,11 @@ export const fetchFromAPI = () => {
 
 export const changeStatusAPI = (status, id) => {
   return (dispatch) => {
-    
+
     Axios
-      .get(`${api.url}/${api.tables}`)
+      .put(`${api.url}/${api.tables}/${id}`)
       .then(res => {
-        dispatch(changeStatus(status,id));
+        dispatch(changeStatus(status, id));
       })
       .catch(err => {
         dispatch(fetchError(err.message || true));
